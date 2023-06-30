@@ -7,10 +7,10 @@ class Block:
     prev_block = 0
     prev_hash = "0" * 64
 
-    def __init__(self,nonce:int,data:str):
+    def __init__(self,data:str):
         self.block = Block.prev_block + 1 
         Block.prev_block = self.block
-        self.nonce = nonce
+        self.nonce = 1
         self.data = data
         self.prev = Block.prev_hash 
         Block.prev_hash = self.calculate_hash()
@@ -29,30 +29,33 @@ class Block:
             self.nonce += 1
             continue
             
-
-
-block_1 = Block(1,"messiywerwerdasd",)
-block_2 = Block(1,"ronaldo")
-block_3 = Block(1,"sterling")
-block_4 = Block(1,"cassady")
-block_5 = Block(1,"cassady")
+class BlockChain:
+    def __init__(self):
+        self.blockchain = []
 
 
 
-blockchain = [block_1,block_2,block_3,block_4]
+
+block_1 = Block("messiye",)
+block_2 = Block("ronaldo")
+block_3 = Block("sterling")
+
+blockchain = BlockChain()
+blockchain.blockchain.append(block_1)
+blockchain.blockchain.append(block_2)
+blockchain.blockchain.append(block_3)
 
 
-
+# print(blockchain)
 print(repr(block_1))
 print(repr(block_2))
 print(repr(block_3))
-print(repr(block_4))
 
+# print(block_1.mine(5))
 
-
-
-
-print(block_1.mine(5))
+# print(repr(block_1))
+# print(repr(block_2))
+# print(repr(block_3))
 
 
 
