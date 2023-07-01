@@ -1,7 +1,8 @@
 import hashlib
+import pickle
 
 
-
+blockchain_list = []
 
 class Block:
     prev_block = 0
@@ -28,10 +29,20 @@ class Block:
                 return self.calculate_hash()
             self.nonce += 1
             continue
-            
+               
 class BlockChain:
     def __init__(self):
         self.blockchain = []
+
+    def pickle_save(self,filename):
+        with open(filename, 'wb') as outp:  
+            pickle.dump(self.blockchain, outp, pickle.HIGHEST_PROTOCOL)
+
+    def pickle_load(self,filename):
+        with open(filename, 'rb') as inp:
+            if self.blockchain == None:
+                self.blockchain = pickle.load(inp)
+
 
 
 
@@ -39,6 +50,7 @@ class BlockChain:
 block_1 = Block("messiye",)
 block_2 = Block("ronaldo")
 block_3 = Block("sterling")
+block_3 = Block("torres")
 
 blockchain = BlockChain()
 blockchain.blockchain.append(block_1)
@@ -46,16 +58,25 @@ blockchain.blockchain.append(block_2)
 blockchain.blockchain.append(block_3)
 
 
+blockchain.pickle_save("blk-chain.pkl")
+
+
+blockchain.pickle_load("blk-chain.pkl")
+print(blockchain.blockchain)
+
+# block_2.mine(5)
 # print(blockchain)
-print(repr(block_1))
-print(repr(block_2))
-print(repr(block_3))
+# print(repr(block_1))
+# print(repr(block_2))
+# print(repr(block_3))
 
 # print(block_1.mine(5))
 
 # print(repr(block_1))
 # print(repr(block_2))
 # print(repr(block_3))
+
+
 
 
 
