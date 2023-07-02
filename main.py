@@ -11,6 +11,7 @@ class Block:
         self.prev = Block.prev_hash
         self.calculate_hash()
         Block.block += 1
+        Block.prev_hash = self.hash
     
 
     def __repr__(self):
@@ -18,14 +19,6 @@ class Block:
     
     def calculate_hash(self):
         self.hash = hashlib.sha256(str(str(self.block + self.nonce ) + self.data + self.prev).encode()).hexdigest()
-        print(self.block)
-        print(self.nonce)
-        print(self.data)
-        print(self.prev)
-        print(self.hash)
-    
-
-    
     
 
 class BlockChain:
@@ -41,13 +34,27 @@ class BlockChain:
         for i in range(idx + 1, len(self.blockchain)):
             self.blockchain[i].prev = self.blockchain[i - 1].hash
             self.blockchain[i].calculate_hash()
-
-
+    
+    def mine(self,idx):
+        flag = False
+        while idx < len(self.blockchain):
+            while True:
+                self.blockchain[idx].calculate_hash()
+                if  self.blockchain[idx].hash[:4] == "0"* 4:
+                    flag = True
+                    self.block_update(idx,self.blockchain[idx].data)
+                    break
+                if flag:
+                    break
+                self.blockchain[idx].nonce += 1
+            idx += 1
 
 b1 = Block("messi")
 b2 = Block("ronaldo")
 b3 = Block("rajesh")
 b4 = Block("raja")
+b5 = Block("kaja")
+
 
 
 
@@ -56,13 +63,15 @@ blockchain.blockchain.append(b1)
 blockchain.blockchain.append(b2)
 blockchain.blockchain.append(b3)
 blockchain.blockchain.append(b4)
+blockchain.blockchain.append(b5)
 
 
 print(repr(blockchain))                 
 
 
-blockchain.block_update(1,"pendu")
-
+# blockchain.block_update(1,"pendu")
+# blockchain.block_update(4,"rendu")
+blockchain.mine(0)
 print()
  
 
